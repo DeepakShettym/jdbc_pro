@@ -1,0 +1,62 @@
+    // SQL update query
+            Statement statement = connection.createStatement();
+            Scanner scanner = new Scanner(System.in);
+
+            while(true){
+                System.out.print("enter name :");
+                String name = scanner.next();
+                System.out.print("enter age :");
+                int age = scanner.nextInt();
+                System.out.print("enter marks :");
+                double marks = scanner.nextInt();
+                System.out.print("do you want to add more(Y/N) :");
+                String choice = scanner.next();
+                String query = String.format("INSERT INTO students(name, age, marks) VALUES('%s', %d, %.2f)", name, age, marks);
+                statement.addBatch(query);
+                if(choice.toUpperCase().equals("N")){
+                    break;
+                }
+            }
+
+            int[] arr = statement.executeBatch();
+
+            for(int i=0;i< arr.length;i++){
+                if(arr[i]==0){
+                    System.out.println("query"+i+"is not executed");
+                }
+            }
+            batch process example.....
+                try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
+                        // SQL update query
+                        String query = "INSERT INTO students(name, age, marks) VALUES(?, ?, ?)";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        Scanner scanner = new Scanner(System.in);
+
+                        while(true){
+                            System.out.print("enter name :");
+                            String name = scanner.next();
+                            System.out.print("enter age :");
+                            int age = scanner.nextInt();
+                            System.out.print("enter marks :");
+                            double marks = scanner.nextDouble();
+                            System.out.print("do you want to add more(Y/N) :");
+                            String choice = scanner.next();
+                            preparedStatement.setString(1,name);
+                            preparedStatement.setInt(2,age);
+                            preparedStatement.setDouble(3,marks);
+                            preparedStatement.addBatch();
+
+                            if(choice.toUpperCase().equals("N")){
+                                break;
+                            }
+                        }
+
+                        int[] arr = preparedStatement.executeBatch();
+
+
+
+
+                    } catch (SQLException e) {
+                        System.out.println("Database error: " + e.getMessage());
+                    }
+
