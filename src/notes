@@ -60,3 +60,52 @@
                         System.out.println("Database error: " + e.getMessage());
                     }
 
+
+            TO display the students rows......
+
+
+            Statement statement = connection.createStatement(); since we are updating Manually...
+            String query = "SELECT * FROM students";
+
+            ResultSet resultSet =   statement.executeQuery(query);
+
+            while(resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                int marks = resultSet.getInt("marks");
+
+                System.out.println("id : " +id);
+                System.out.println("name : " +name);
+                System.out.println("age : " +age);
+                System.out.println("marks : " +marks);
+            }
+            To update the specific Row.....
+            Statement statement = connection.createStatement();  since we are updating Manually...
+            String query = String.format("INSERT INTO students(name, age, marks) VALUES('%s', %d, %.2f)", "nabeel", 22, 90.99);
+
+            int rowsEffected = statement.executeUpdate(query);
+
+            if(rowsEffected > 0){
+
+            To delete a specific Row.......
+            Statement statement = connection.createStatement(); since we are updating Manually...
+             String query = String.format("DELETE FROM students WHERE id = 2");
+
+                 int rowsEffected = statement.executeUpdate(query);
+
+                 if(rowsEffected > 0){
+                  System.out.println("Data deleted Successfully ");
+                        }
+             To Insert into  a table .....  for many values.... using PreparedStatement
+                         String query = "INSERT INTO students(name,age,marks) VALUES(?,?,?)";
+                         PreparedStatement preparedStatement = connection.prepareStatement(query); updating for many values
+
+                         preparedStatement.setString(1,"xyz");
+                         preparedStatement.setInt(2,21);
+                         preparedStatement.setFloat(3,95.77f);
+
+                         int rowsEffected = preparedStatement.executeUpdate();
+
+
+
